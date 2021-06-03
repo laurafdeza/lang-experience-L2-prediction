@@ -1,0 +1,41 @@
+add_effect_sizes        Effect sizes for Analysis of Variance
+apa6_pdf                APA article (6th edition)
+apa_barplot             Barplots for factorial designs that conform to
+                        APA guidelines
+apa_beeplot             Beeswarm plots for factorial designs that
+                        conform to APA guidelines
+apa_factorial_plot      Plots for factorial designs that conform to APA
+                        guidelines
+apa_lineplot            Lineplots for factorial designs that conform to
+                        APA guidelines
+apa_prepare_doc         Prepare APA document (deprecated)
+apa_print               Format statistics (APA 6th edition)
+apa_print.aov           Format statistics from ANOVA (APA 6th edition)
+apa_print.emmGrid       Format statistics (APA 6th edition)
+apa_print.glht          Format statistics (APA 6th edition)
+apa_print.glm           Format statistics (APA 6th edition)
+apa_print.htest         Format statistics (APA 6th edition)
+apa_print.list          Format statistics from ANOVA (APA 6th edition)
+apa_table               Prepare table for printing
+cite_r                  Cite R and R-packages
+conf_int                Between-subjects confidence intervals
+fetch_web_refs          Fetch a .bib-reference file from the web
+                        (defunct)
+fetch_zotero_refs       Save a collection from a Zotero-Account to a
+                        BibTeX-file
+hd_int                  Highest density interval
+in_paren                Replace parentheses with brackets
+papaja                  APA manuscripts from R Markdown
+printnum                Prepare numeric values for printing
+printp                  Prepare numeric values for printing as p-value
+r_refs                  Create a reference file for R and its packages
+relevel.papaja_labelled
+                        Reorder Levels of Labelled Factor
+render_appendix         Render appendix
+revision_letter_pdf     Journal revision letter
+se                      Standard errors
+sort_terms              Sort ANOVA or regression table by
+                        predictors/effects
+theme_apa               APA compatible ggplot2 theme
+variable_label          Assign or Extract Variable Labels
+wsci                    Within-subjects confidence intervals

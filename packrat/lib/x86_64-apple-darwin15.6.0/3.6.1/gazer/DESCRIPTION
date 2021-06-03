@@ -1,0 +1,38 @@
+Package: gazer
+Type: Package
+Title: Tools for Processing Eye Tracking Data
+Version: 0.1
+Date: 2018-07-05
+Authors@R: c(
+  person("Dan", "Mirman", email = "dan@danmirman.org", role = c("aut", "cre")),
+  person("Tristan", "Mahr", email = "tristan.mahr@wisc.edu", role = c("aut", "cre")),
+  person("Matt", "Winn", email = "mwinn83@gmail.com", role = c("aut", "cre")),
+  person("Jason", "Geller", email = "jgeller1@uab.edu", role = c("aut", "cre")))
+Author: Dan Mirman
+Maintainer: Dan Mirman <dan@danmirman.org>
+Description: Functions for reading and pre-processing eye tracking data.
+URL: http://github.com/dmirman/gazer
+BugReports: http://github.com/dmirman/gazer/issues
+License: GPL-3
+LazyData: true
+Imports: ggplot2, data.table, tidyverse, lme4, zoo
+Remotes: tmalsburg/saccades/saccades
+RoxygenNote: 6.1.1
+Suggests: knitr, rmarkdown
+VignetteBuilder: knitr
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RemoteType: github
+RemoteHost: api.github.com
+RemoteRepo: gazer
+RemoteUsername: jgeller112
+RemoteRef: HEAD
+RemoteSha: a7e7c5f1f9f31c2b0af2c0c525b66d8dc9a70878
+GithubRepo: gazer
+GithubUsername: jgeller112
+GithubRef: HEAD
+GithubSHA1: a7e7c5f1f9f31c2b0af2c0c525b66d8dc9a70878
+NeedsCompilation: no
+Packaged: 2020-09-21 22:22:04 UTC; lfa
+Depends: R (>= 3.5.0)
+Built: R 3.6.1; ; 2020-09-21 22:22:26 UTC; unix

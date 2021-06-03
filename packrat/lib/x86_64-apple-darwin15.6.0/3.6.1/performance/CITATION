@@ -1,0 +1,13 @@
+bibentry(
+  "Article",
+  title = "Assessment, Testing and Comparison of Statistical Models using R",
+author = c(person("Daniel", "Lüdecke"), person("Mattan S.", "Ben-Shachar"), person("Indrajeet", "Patil"), person("Philip", "Waggoner"), person("Dominique", "Makowski")),
+  year = 2021,
+  journal = "Journal of Open Source Software",
+  volume = 6,
+  number = 59,
+  pages = 3112,
+  doi = "10.31234/osf.io/vtq8f",
+  textVersion = "Lüdecke et al., (2021). Assessment, Testing and Comparison of Statistical Models using R. Journal of Open Source Software,
+6(59), 3112. https://doi.org/10.31234/osf.io/vtq8f"
+)

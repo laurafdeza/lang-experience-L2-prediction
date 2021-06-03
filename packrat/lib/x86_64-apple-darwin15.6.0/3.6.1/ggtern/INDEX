@@ -1,0 +1,81 @@
+.getFunctions           OLD FUNCTIONS
+                        new_panel','train_layout','train_position','train_ranges','map_position','map_layout','reset_scales','facet_render',
+                        xlabel','ylabel' expand_default', ## REMOVED
+aes                     Modified Aesthetic Mappings
+annotate                Create an annotation layer (ggtern version).
+annotation_raster_tern
+                        Annotation: High-performance rectangular tiling
+                        (ggtern version)
+approved_layers         Approved Geoms, Stats and Positions
+arrangeGrob             Arrange multiple grobs on a page (ggtern
+                        version)
+breaks_tern             Generate Axis Breaks
+coord_tern              Ternary Coordinate System
+data_Feldspar           Elkin and Groves Feldspar Data
+data_Fragments          Grantham and Valbel Rock Fragment Data
+data_SkyeLava           Aichisons Skye Lavas
+data_USDA               USDA Textural Classification Data
+data_WhiteCells         Aichisons White Cells
+draw_key_tern           Key drawing functions
+geom_Xisoprop           Fixed Value Isoproportion Lines
+geom_Xline              Fixed Value Lines
+geom_confidence_tern    Confidence Interval
+geom_crosshair_tern     Ternary Crosshairs
+geom_density_tern       Density Estimate (ggtern version)
+geom_errorbarX          Ternary Error Bars
+geom_hex_tern           Hexbin (ggtern version).
+geom_interpolate_tern   Ternary Interpolation
+geom_label_viewport     Draw Label at Relative Position on Viewport
+geom_mask               Apply Manual Clipping Mask
+geom_mean_ellipse       Mean Ellipse
+geom_point_swap         Points (Colour and Fill Swapped), as for a
+                        scatterplot
+geom_polygon_closed     Closed Polygons
+geom_smooth_tern        Add a Smoothed Conditional Mean.
+geom_text_viewport      Draw Text at Relative Position on Viewport
+geom_tri_tern           Tribin (ggtern version).
+ggplot                  Create a new ggplot plot.
+ggsave                  Save a ggplot (or other grid object) with
+                        sensible defaults (ggtern version)
+ggtern                  ggtern Constructor
+ggtern_labels           Change Axis labels and legend titles
+ggtern_labels_arrow_suffix
+                        Atomic, Weight or Custom Percentage Suffix
+ggtern_package          Ternary Diagrams in R
+ggtern_themes           ggtern themes
+label_formatter         'label_formatter' is a function that formats /
+                        parses labels for use in the grid.
+labels_tern             Generate Axis Labels
+mahalanobis_distance    Mahalanobis Distance
+position_jitter_tern    Jitter Ternary Points
+position_nudge_tern     Nudge Ternary Points.
+predictdf2d             Prediction data frame
+scale_X_continuous      Ternary Position Scales
+strip_unapproved        Strip Unapproved Layers
+tern_limits             Restrict Ternary Limits
+ternary_transformation
+                        Ternary / Cartesian Transformation
+theme_arrowlength       Change the Length of the Ternary Arrows
+theme_bordersontop      Render Borders on Top
+theme_clockwise         Direction of Ternary Rotation
+theme_complete          List of Available Themes
+theme_convenience_functions
+                        Theme Convenience Functions
+theme_elements          New Theme Elements
+theme_gridsontop        Render Grids on Top
+theme_latex             Parse Labels w Latex Markup
+theme_legend_position   Position Legend in Convenient Locations
+theme_mesh              Create Grid Mesh
+theme_noarrows          Show or Hide the Ternary Arrows
+theme_nomask            Show or Hide the Clipping Mask
+theme_novar_tern        Blank one variable's annotations in ternary
+                        plot
+theme_rotate            Rotate Ternary Diagram
+theme_showgrid          Show or Hide Grid
+theme_showlabels        Show or Hide Axis Ticklabels
+theme_showprimary       Show or Hide the Primary/Secondary Ticks
+theme_showtitles        Show or Hide the Axis (Apex) Titles
+theme_ticklength        Modify the Ticklengths
+theme_ticksoutside      Place Ticks Inside or Outside
+theme_zoom_X            Zoom on Plot Region
+zzz-depreciated         Depreciated Functions

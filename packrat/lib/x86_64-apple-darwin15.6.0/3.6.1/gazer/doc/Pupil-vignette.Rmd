@@ -1,0 +1,154 @@
+---
+title: "Pupil Preprocessing"
+author: "Jason Geller"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+
+This is an R markdown file explaining pupil preprocessing functions contained in the gazeR package. The example dataset is from a lexical decision task that had individuals judge the lexicality of printed and cursive stimuli. Cursive stimuli are ambiguous and non-segmented making them really hard to recognize. It was predicted that it should be harder to recognize cursive words than printed words. Good thing we have this new package to help us test this hypothesis! 
+
+# Preparing Your Data
+
+Before using this package, a number of steps are required: First, your data must have been collected using an SR Research Eyelink eye tracker. Second, your data must have been exported using SR Research Data Viewer software. Third, I recommend extending blinks 100 ms before and after a blink in Data Viewer. However, that is not necessary as we have a function that will do that for you! A Sample Report must be generated with the following columns:
+
+
+```{r, message=FALSE, warning=FALSE, eval=FALSE, echo=FALSE}
+RECORDING_SESSION_LABEL
+TRIAL_INDEX
+AVERAGE_IN_BLINK
+TIMESTAMP
+AVERAGE_PUPIL_SIZE
+IP_START_TIME
+SAMPLE_MESSAGE
+```
+
+You should also include other columns of interest. 
+
+# Load Package
+
+```{r, message=FALSE, warning=FALSE}
+devtools::install_github("dmirman/gazer")
+```
+
+# Load Data
+We need to read in the file that contains data from 4 participants. Given how large pupil files can be, I did this to reduce computational processing. 
+
+```{r}
+pupil_path <- system.file("extdata", "Pupil_file1.xls", package = "gazer")
+pupil_sub1<-read.table(pupil_path)
+```
+
+In reality, you will have many Ss files. The function `merge_pupil_files` will take all your pupil files from a folder path and merge them together. It will also: rename columns, make all columns lowercase, and adds a new column `time` that places tracker time in ms. 
+
+```{r}
+pupil_files<-merge_pupil_files(file_list)
+```
+
+# Behavioral Data
+
+If you are also interested in analyzing behavioral data (RTs and accuracy), the `behave_data` function will cull the important behavioral data from the Sample Report. `behave_data` will return a data frame without errors when omiterrors=TRUE or a data frame with errors for accuracy/error analysis when omiterrors=FALSE. The columns relevant for your experiment need to be specified within the behave_col names argument. This does not eliminate outliers. You must use your preferred method. I recommend the very good `trimr` package by Jim Grange. 
+
+
+```{r}
+behave_data<-behave_pupil(pupil_files, omiterrors = FALSE, behave_colnames = c("subject","script","alteration", "trial", "target","accuracy","rt", "block", "cb"))
+
+```
+
+# Blinks
+
+Subjects and trials with a lot of missing data--due to blinks--should be removed. `missing_pupil_count` will remove subjects and items that pass a specified missing threshold (we have it set at .2, but users can change this to whatever value they would like). The percentage of subjects and trials thrown out are returned for reporting.    
+
+```{r}
+pup_missing<-count_missing_pupil(pupil_files1, missingthresh = .2)
+```
+
+## Extending Blinks
+
+If you are exporting files from SR, there is an option to extend blinks within Data Viewer. It is generally recommended that you extend blinks 100 ms before the blink and 100 ms after the blink. If you have not done this before exporting into R, you can use the `extend_blinks` function. The fillback argument extends blinks back in time and the fillforward argument extends blinks forward in time. For this experiment the tracker sampled at 250Hz (once every 4 ms) and we extend the blinks forward and backward 100 ms in time. 
+
+```{r}
+pup_extend<- pup_missing %>% group_by(subject, trial) %>% 
+  mutate(extendblink=extend_blinks(pupil, fillback=100, fillforward=100))
+```
+
+# Interpolation of Pupil Values
+
+Pupil values need to be linearly interpolated. The `interpolate_pupil` function sets all pupil values with blinks to NA if extendblink=FALSE (SR does not do this with sample files automatically) and linearly interpolates those values. If extendblinks=TRUE, it performs linear interpolation. This requires the use of the `extend_blinks` function referenced above. 
+
+```{r}
+pup_interp<-interpolate_pupil(pup_outliers, extendblinks=TRUE, type="linear")
+```
+
+# Median Absoulate Deviation (MAD)
+
+Artifacts can arise from quick changes in pupil size (Kret & Sjak-Shie, in press). The max_dilation function calculates the normalized dilation speed, which is the max absolute change between samples divided by the temporal separation for each sample, preceding or succeeding the sample. To detect out liters, the median absolute deviation is calculated from the speed dilation variable, multiplied by a constant, and added to the median dilation speed variable--values above this threshold are then removed.
+
+
+
+```{r}
+max_pup<-pup_interp%>% 
+  group_by(subject, trial) %>% 
+  mutate(speed=speed_pupil(interp,time))
+
+mad_pup<-max_pup %>% 
+  group_by(subject, trial) %>%
+  mutate(MAD=calc_mad(speed))
+
+mad_removal<-mad_pup %>% 
+  filter(speed < MAD)
+
+mad_removal<-as.data.frame(mad_removal)
+```
+
+# Smoothing
+
+Pupil data can be extremely noisy! One way to reduce some of this noise is to use a n-point moving average to smooth the data. You can use the `movingaverage` function. To use this function, you need to specify the column that contains the interpolated pupil values and how many samples you want to average over. In this example, we use a 5-point moving average (n= 5). However, you can set the moving average to whatever you would like. 
+
+```{r, echo=FALSE}
+rolling_mean_pupil_average<-mad_removal %>% 
+        dplyr::mutate(movingavgpup= movingaverage(interp,n=5))
+```
+
+
+# Baseline correction
+
+To control for variability arising from non-task related processing, baseline correction is commonly done. There are several different types of baseline correction. In a recent paper by Mathot et al. (2018), it was recommended that a subtractive baseline correction be done based on the median. The `baseline_correction_pupil` function finds the median pupil size during a specified baseline period for each trial. In this example, we used a baseline window between 500 ms and 1000 ms (when the fixation cross was on screen) and subtracted this value from each pupil trace. 
+
+```{r, echo=FALSE}
+baseline_pupil<-baseline_correction_pupil(timebins1, baseline_window=c(500,1000))
+```
+
+
+##  Trial Clipping
+
+In most psychological experiments, each trial includes several events. We can use this information to start our trial onset at zero.  To do this we can use the `onset_pupil` function. This function requires three arguments: time column, sample message column, and the event of interest ("target") in our example). This will allow us to start the trial at the onset of the target. In the output below, we can see below that our experiment now starts at zero, when the target was displayed on screen.  
+
+```{r echo=FALSE, warning=FALSE}
+
+baseline_pupil_onset<-baseline_pupil %>% 
+  dplyr::group_by(subject, trial) %>%  
+  dplyr::mutate(time_zero=onset_pupil(time, sample_message, event=c("target"))) %>%
+  ungroup() %>% 
+```
+
+# Decimation or Downsampling
+
+Place data into timebins (users can specifiy a timebin to use). For this example, we will use 200 ms timebins. 
+
+```{r, echo=FALSE}
+timebins1<-downsample_pupil(baseline_pupil_onset, bin.length =  200)
+```
+
+
