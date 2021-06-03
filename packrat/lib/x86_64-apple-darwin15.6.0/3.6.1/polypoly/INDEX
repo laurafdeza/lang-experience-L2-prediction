@@ -1,7 +1,0 @@
-poly_add_columns        Add orthogonal polynomial columns to a
-                        dataframe
-poly_melt               Melt a polynomial matrix
-poly_plot               Plot a polynomial matrix
-poly_rescale            Rescale the range of a polynomial matrix
-polypoly                polypoly: Helper functions for orthogonal
-                        polynomials
